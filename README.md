@@ -208,7 +208,7 @@ Access at: `http://localhost:8501`
 
 ## 📸 Demo Screenshot
 
-![Application Demo](screenshots/demo.png)
+![Application Demo](aspect_sentiment_project/screenshots/demo.png)
 
 **Example Analysis:**
 - **Input:** "food quality is great but delivery time is horrible"
