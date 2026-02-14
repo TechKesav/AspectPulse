@@ -253,24 +253,6 @@ Expected: Overall MIXED, Aspects vary by word association
 
 ---
 
-## 🎓 Viva / Presentation Explanation
-
-### One-Liner
-> "The system takes user input, cleans the tweet, extracts important aspects using NLP, analyzes sentiment for each aspect using its isolated clause context, and displays detailed results through a Streamlit interface."
-
-### Detailed Explanation (45 seconds)
-> "This is a clause-based aspect sentiment analysis system. Users enter text through Streamlit. The system preprocesses text by cleaning it. Using spaCy, we extract key aspects like nouns. Then, here's the key innovation: we don't analyze aspects with full sentence context. Instead, we split the sentence by connectors like 'but' and 'and' to isolate the clause containing each aspect. We then apply a pre-trained BERT model to classify sentiment as POSITIVE or NEGATIVE for that clause specifically. This prevents cross-clause sentiment confusion. Finally, we display both overall sentiment and accurate aspect-level sentiment."
-
-### Technical Explanation (For Detailed Questions)
-
-**If Asked: "Why use clause-based analysis instead of full-sentence context?"**
-
-> "Sentence-level sentiment models tend to assign dominant or final sentiment to all aspects, even when different clauses express different sentiments. For example: 'food quality is great but delivery time is horrible'. A full-sentence approach might confuse the aspect 'food quality' with the negative sentiment from 'horrible'. By extracting the specific clause containing each aspect, we ensure accurate aspect-specific sentiment classification. This is called Rule-Enhanced Contextual ABSA."
-
-**If Asked: "How does this compare to standard ABSA approaches?"**
-
-> "Standard approach uses fine-tuned BERT models trained on aspect-sentiment pairs. Our approach is simpler but still effective: we use rule-based clause extraction combined with a pre-trained sentiment model. This keeps the system explainable and avoids the complexity of fine-tuning, making it perfect for practical applications and mini projects."
-
 ### Architecture Explanation
 > "The pipeline has six main stages: First, text preprocessing removes noise. Second, aspect extraction identifies important entities using spaCy. Third, aspect filtering removes meaningless words. Fourth, clause-based context extraction splits sentences by connectors to isolate aspect-relevant context. Fifth, sentiment analysis applies BERT to the isolated clause. Sixth, results are displayed. The threelayer hierarchy (Sentence → Clause → Aspect → Sentiment) ensures intelligent context isolation."
 
@@ -396,39 +378,6 @@ Aspect (The noun/entity)
     ↓
 Sentiment (POSITIVE/NEGATIVE)
 ```
-
-This is intelligent hierarchical design, not a hack!
-
-
-
-## 📝 How to Explain This in Viva
-
-### If Examiner Asks: "Why were the earlier results wrong?"
-
-**Answer:**
-> "Initially, we analyzed aspects with full sentence context, which works for simple sentences. However, when a sentence contains multiple clauses with different sentiments separated by 'but' or 'and', the model gets confused by unrelated sentiment words. For example, 'food quality is great but delivery time is horrible' would confuse the food quality aspect with the negative sentiment. We improved accuracy by using clause-based context extraction—we split sentences and isolate the exact clause containing each aspect."
-
-### If Examiner Asks: "How does clause extraction improve results?"
-
-**Answer:**
-> "Clause extraction works by splitting sentences at natural boundaries like 'but' and 'and'. Once we find the clause containing an aspect, we analyze sentiment only on that clause, not the entire sentence. This isolates irrelevant sentiment words in other clauses. Result: 'food quality' from 'food quality is great' gets analyzed independently from 'delivery time is horrible'."
-
-### If Examiner Asks: "What type of ABSA are you using?"
-
-**Answer:**
-> "We're using a **Rule-Enhanced Contextual approach** to Aspect-Based Sentiment Analysis. We combine rule-based clause extraction with a pre-trained BERT sentiment model. This is simpler than training aspect-aware transformers, but highly effective for practical applications. The threelayer hierarchy (Sentence → Clause → Aspect → Sentiment) ensures intelligent context isolation."
-
-### If Examiner Asks: "How is this different from standard sentiment analysis?"
-
-**Answer:**
-> "Standard sentiment analysis gives only overall sentiment for the entire text. Our system goes further by: (1) identifying specific aspects (nouns) mentioned in the text, (2) isolating the context for each aspect using clause extraction, (3) predicting sentiment for each aspect individually. This gives detailed, actionable insights about what specifically was positive or negative."
-
-### If Examiner Asks: "Why not use a fine-tuned ABSA model?"
-
-**Answer:**
-> "Fine-tuned ABSA models require aspect-sentiment pair datasets and expensive training. Our approach achieves similar results using rule-based logic combined with a pre-trained model. This makes the system explainable, lightweight, and practical—exactly what's needed for a mini project. Advanced fine-tuning is research-level work."
-
----
 
 ---
 
